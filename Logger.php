@@ -16,6 +16,14 @@
         // ログレベル
         private $logLevel = ['TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'];
 
+        /**
+         * __construct
+         *
+         * @param  mixed $dirName ディレクトリの位置
+         * @param  mixed $fileName ログのファイル名
+         *
+         * @return void
+         */
         public function __construct($dirName = __DIR__, $fileName = "log.txt")
         {
             $this->logDir = $dirName;
@@ -27,10 +35,10 @@
         }
 
         /**
-         * ログを保存します。
+         * ログを保存します
          *
-         * @param  mixed ログレベル
-         * @param  mixed ログメッセージ
+         * @param  mixed $level ログレベル
+         * @param  mixed $message ログメッセージ
          *
          * @return void
          */
@@ -45,6 +53,11 @@
             $this->writer->write($messageBuilder);
         }
 
+        /**
+         * エラー設定を行います
+         *
+         * @return void
+         */
         private function set()
         {
             set_error_handler(function($error_no, $error_msg, $error_file, $error_line, $error_vars) {

@@ -27,6 +27,14 @@
         private $fileName;
         private $fileSize;
 
+        /**
+         * __construct
+         *
+         * @param  mixed $configure Settingsのインスタンス
+         * @param  mixed $logger Loggerのインスタンス
+         *
+         * @return void
+         */
         public function __construct($configure, $logger)
         {
             $this->configure = $configure;
@@ -36,7 +44,7 @@
         /**
          * JSONデータをロードします
          *
-         * @param  mixed デコードしたJSON
+         * @param  mixed $decoded_json デコードしたJSON
          *
          * @return void
          */
@@ -63,7 +71,7 @@
         /**
          * 存在する場合テキストをロードします
          *
-         * @param  mixed デコードしたJSON
+         * @param  mixed $json デコードしたJSON
          *
          * @return void
          */
@@ -73,12 +81,24 @@
                 $this->text = $json->{"message"}->{"text"};
         }
 
+        /**
+         * 存在する場合はステッカーをロードします
+         *
+         * @param  mixed $json デコードしたJSON
+         *
+         * @return void
+         */
         private function loadStickerId($json)
         {
             if($this->messageType == "sticker")
                 $this->stickerId = $json->{"stickerId"};
         }
 
+        /**
+         * ユーザー名をロードします
+         *
+         * @return void
+         */
         private function getUserName()
         {
             $this->logger->log(0, "Get user name");
@@ -107,6 +127,11 @@
             $this->userName = ($info['http_code'] == 200) ? $jsonObj->{"displayName"} : "No name";
         }
 
+        /**
+         * ファイルをダウンロードし、ファイル名をロードします
+         *
+         * @return void
+         */
         public function getFile()
         {
             $this->logger->log(0, "Get file");
@@ -141,6 +166,11 @@
             $this->fileName = $fileName;
         }
 
+        /**
+         * ファイルサイズがDiscordの許容サイズか判定します
+         *
+         * @return void
+         */
         public function isFileOverSize()
         {
             return \filesize($this->configure->uploadLocation . $this->fileName) > $this->configure->maxFileSize;

@@ -28,6 +28,11 @@
         private $botThumbnail;
         private $maxFileSize;
 
+        /**
+         * __construct
+         *
+         * @return void
+         */
         public function __construct()
         {
             // configureの読み込み
@@ -35,7 +40,7 @@
         }
 
         /**
-         * configureファイルから設定を読み出します。
+         * configureファイルから設定を読み出します
          *
          * @return void
          */

@@ -22,7 +22,6 @@
             $this->settings = &$settings;
         }
 
-        /// <summary>configure.jsonから設定を読み出します。</summary>
         /**
          * configure.jsonから設定を読み出します。
          *

@@ -4,9 +4,9 @@
     trait Reader
     {
         /**
-         * ファイルをJSON形式で読み込みます。
+         * ファイルをJSON形式で読み込みます
          *
-         * @param  mixed 読み込むファイル
+         * @param  mixed $file 読み込むファイル
          *
          * @return array JSONデータ
          */
