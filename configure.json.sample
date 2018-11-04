@@ -1,0 +1,20 @@
+{
+    "system": {
+        "locale": "",
+        "defaultUserName": "No Name",
+        "uploadLocation": "/files"
+    },
+
+    "line": {
+        "token": "",
+        "secret": "",
+        "groupId": ""
+    },
+
+    "discord": {
+        "hookUrl": "",
+        "botName": "LINE2Discord",
+        "botThumbnail": "",
+        "maxFileSize": 8388608
+    }
+}
