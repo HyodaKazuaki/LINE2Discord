@@ -51,7 +51,7 @@
         public function loadJson($decoded_json)
         {
             //if(DEBUG) return;
-            $this->logger->log(0, \json_encode($decoded_json));
+            $this->logger->log(0, \json_encode($decoded_json, JSON_UNESCAPED_UNICODE));
             $json = $decoded_json->{"events"}[0];
             
             $this->replyToken = $json->{"replyToken"};
@@ -147,11 +147,13 @@
                 $this->logger->log(4, \curl_error($ch) . \curl_errno($ch));
             switch ($this->messageType) {
                 case 'file':
+                    $this->logger->log(0, "Message type is file");
                     $fileName = $this->fileName;
                     break;
                 case 'image':
                 case 'audio':
                 case 'video':
+                    $this->logger->log(0, "Message type is image, audio or video");
                     $mime = mime_content_type($tmp);
                     $fileName = $this->messageId . "." . MIME::TYPE[$mime];
                     break;

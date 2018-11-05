@@ -53,7 +53,7 @@
             $hash = hash_hmac('sha256', $json, $this->configure->secret, true);
             $sig = base64_encode($hash);
             $header = \getallheaders();
-            $this->logger->log(0, \json_encode($header));
+            $this->logger->log(0, \json_encode($header, JSON_UNESCAPED_UNICODE));
             $compSig = $header['X-Line-Signature'];
 
             $this->logger->log(0, "SIG: {$sig}");
