@@ -117,6 +117,7 @@
                 case 'video':
                 case 'audio':
                 case 'file':
+                    // ファイルサイズチェック
                     if($this->lineMessage->isFileOverSize())
                         $postfield = array('content' => $this->configure->uploadURI . $this->lineMessage->fileName);
                     else{
