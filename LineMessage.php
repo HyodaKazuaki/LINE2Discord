@@ -7,7 +7,6 @@
 
     use LINE2Discord\ReadOnlyTrait as ReadOnlyTrait;
     use LINE2Discord\Logger as Logger;
-    use LINE2Discord\MIME as MIME;
 
     class LineMessage
     {
@@ -136,35 +135,42 @@
         {
             $this->logger->log(0, "Get file");
 
-            $tmp = \tmpfile();
-            $tempName = stream_get_meta_data($tmp)['uri'];
+            // ファイル名を決定する
+            $fileName = '';
+            if($this->messageType == 'file')
+                // メッセージタイプがfileの場合は拡張子もfileNameに含んでいる
+                $fileName = $this->fileName;
+            else {
+                // 拡張子を決定する
+                $extension = '';
+                switch ($this->messageType) {
+                    case 'image':
+                        $extension = 'jpg';
+                        break;
+                    case 'audio':
+                        $extension = 'm4a';
+                        break;
+                    case 'video':
+                        $extension = 'mp4';
+                        break;
+                    default:
+                        $this->logger->log(4, "Unknown message type {$this->messageType}");
+                        return;
+                }
+                $fileName = $this->messageId . "." . $extension;
+            }
+
+            // ファイルを作成
+            $fp = fopen($this->configure->uploadLocation . $fileName, "w+");
             $url = str_replace("{messageID}", $this->messageId, $this->configure->downloadURL);
             $ch = \curl_init($url);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array("Authorization: Bearer {{$this->configure->token}}"));
-            curl_setopt($ch, CURLOPT_FILE, $tmp);
+            curl_setopt($ch, CURLOPT_FILE, $fp);
             curl_setopt($ch, CURLOPT_FAILONERROR, true);
-            if(!curl_exec($ch))
-                $this->logger->log(4, \curl_error($ch) . \curl_errno($ch));
-            switch ($this->messageType) {
-                case 'file':
-                    $this->logger->log(0, "Message type is file");
-                    $fileName = $this->fileName;
-                    break;
-                case 'image':
-                case 'audio':
-                case 'video':
-                    $this->logger->log(0, "Message type is image, audio or video");
-                    $mime = mime_content_type($tmp);
-                    $fileName = $this->messageId . "." . MIME::TYPE[$mime];
-                    break;
-                default:
-                    $this->logger->log(4, "Unknown message type {$this->messageType}");
-                    return;
-                    break;
-            }
+            curl_exec($ch);
             \curl_close($ch);
+            fclose($fp);
             $this->logger->log(0, "Save file as {$fileName} on {$this->configure->uploadLocation}");
-            \copy(stream_get_meta_data($tmp)['uri'], $this->configure->uploadLocation . $fileName);
             $this->fileName = $fileName;
         }
 
