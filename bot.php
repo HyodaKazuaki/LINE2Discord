@@ -24,27 +24,31 @@
             $this->configure = new Settings();
 
             // jsonを受け取り
-            $json = file_get_contents('php://input');
+            $encoded_json = file_get_contents('php://input');
             
             // ハッシュチェック
             $this->logger->log(0, "Check hash");
-            if(!$this->checkHash($json))
+            if(!$this->checkHash($encoded_json))
                 return;
 
             // jsonをオブジェクトにする
             $this->logger->log(0, "Convert json to object");
-            $this->lineMessage = new LineMessage($this->configure, $this->logger);
-            $this->lineMessage->loadJson(json_decode($json));
+            $decoded_json = json_decode($encoded_json)->{"events"};
+            $this->logger->log(0, \json_encode($decoded_json, JSON_UNESCAPED_UNICODE));
 
-            // 特定のグループからの送信のみに絞る
-            $this->logger->log(0, "Validation input");
-            if(!$this->validation())
-                return;
-            
-            // 各処理へ振り分ける
-            $this->logger->log(0, "Distribute each process");
-            $this->distribute();
-
+            foreach($decoded_json as $json) {
+                $this->lineMessage = new LineMessage($this->configure, $this->logger);
+                $this->lineMessage->loadJson($json);
+    
+                // 特定のグループからの送信のみに絞る
+                $this->logger->log(0, "Validation input");
+                if(!$this->validation())
+                    return;
+    
+                // 各処理へ振り分ける
+                $this->logger->log(0, "Distribute each process");
+                $this->distribute();
+            }
         }
 
         private function checkHash($json)
