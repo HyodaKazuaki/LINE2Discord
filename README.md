@@ -51,7 +51,6 @@ PHP7以上が動作し、**HTTPS通信ができる必要があります。**
 | discord | botName | Discordのチャットで表示されるBotの名前です。 |
 | discord | botThumbnail | Discordのチャットで表示されるBotのサムネイル画像のURLです。 |
 | discord | maxFileSize | Discordに送信できる最大のファイルサイズです。バイト形式で入力してあり、これを超える大きさのファイルはURLがメッセージとして送信されます。 |
-|||
 
 ## 注意事項
 このBotはLINEのグループからファイルをダウンロードしますが、削除しないためサーバ上に残り続けます。  
