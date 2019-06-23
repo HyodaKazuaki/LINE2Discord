@@ -46,7 +46,6 @@ PHP7以上が動作し、**HTTPS通信ができる必要があります。**
 | line | token | LINEのBotで必要となるアクセストークンです。 |
 | line | secret | LINEのBotで必要となるシークレットキーです。 |
 | line | groupId | 受信するグループを限定するためのグループIDです。 |
-|||
 | discord | hookUrl | DiscordのWEBHOOK URLです。|
 | discord | botName | Discordのチャットで表示されるBotの名前です。 |
 | discord | botThumbnail | Discordのチャットで表示されるBotのサムネイル画像のURLです。 |
