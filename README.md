@@ -1,5 +1,5 @@
 # LINE2Discord Bot
-English README is working progress! Hold a while!
+English README is `README_en.md`.
 
 ## できること
 LINEのグループに送信されたメッセージをDiscordのグループへ送信します。
