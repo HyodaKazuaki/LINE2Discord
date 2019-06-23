@@ -43,7 +43,6 @@ PHP7以上が動作し、**HTTPS通信ができる必要があります。**
 | system | locale | [PHPの言語設定](http://php.net/manual/ja/function.setlocale.php)です。マルチバイトドメインの処理に影響があることがあるため必要に応じて設定してください。 |
 | system | defaultUserName | Discordに表示されるデフォルトのユーザー名です。LINEの個人情報利用に関する条項に同意していない場合はユーザー名が取得できないため、この名前が使われます。 |
 | system | uploadLocation | LINEから送信されたファイルが保存される位置です。これらファイルがある位置をカレントディレクトリとしています。 |
-|||
 | line | token | LINEのBotで必要となるアクセストークンです。 |
 | line | secret | LINEのBotで必要となるシークレットキーです。 |
 | line | groupId | 受信するグループを限定するためのグループIDです。 |
