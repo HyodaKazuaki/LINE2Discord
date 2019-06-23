@@ -43,16 +43,13 @@
         /**
          * JSONデータをロードします
          *
-         * @param  mixed $decoded_json デコードしたJSON
+         * @param  mixed $json デコードしたJSON
          *
          * @return void
          */
-        public function loadJson($decoded_json)
+        public function loadJson($json)
         {
-            //if(DEBUG) return;
-            $this->logger->log(0, \json_encode($decoded_json, JSON_UNESCAPED_UNICODE));
-            $json = $decoded_json->{"events"}[0];
-            
+            //if(DEBUG) return;            
             $this->replyToken = $json->{"replyToken"};
             $this->messageId = $json->{"message"}->{"id"};
             $this->sourceType = $json->{"source"}->{"type"};
